@@ -15,4 +15,5 @@ The connection shoiuld look like the following:
 NC  C  NO      NC  C  NO
  
  The common (zero) wire shoulb be connected to the motor permanently. 
- The exmaple inside contains a sketch, wich shows, how to initialize the Blinds: you should pass the two digital PINs, where the relays are connedted to, the maximum spinning time (the operation time to fully open the blinds from the closed state)
+ The exmaple inside contains a sketch, wich shows, how to initialize the Blinds: you should pass the two digital PINs, where the relays are connedted to, the maximum spinning time (the operation time to fully open the blinds from the closed state).
+ The current position of the Blinds is saved to EEPROM each time, after the Blonds stop moving. 
