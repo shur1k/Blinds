@@ -1,0 +1,18 @@
+#######################################
+# Syntax Coloring Map For Blinds#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Blinds	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+
+
+setPosition KEYWORD2
+getPosition KEYWORD2
+isMoving KEYWORD2run KEYWORD2
