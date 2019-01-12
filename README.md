@@ -4,15 +4,18 @@ For a safety reason, one of the relays should be used to switch on and off the P
 The connection shoiuld look like the following:
 
               Forward Backward  
+              
   Power wire   wire    wire
   
      |           |     |
      |   --------|--   |
      |  |        |  |  |
+     
  ---------      ---------
 | o  o  o |    | o  o  o |
  ---------      ---------
- NC  C  NO      NC  C  NO
+
+NC  C  NO      NC  C  NO
  
  The common (zero) wire shoulb be connected to the motor permanently. 
  The exmaple inside contains a sketch, wich shows, how to initialize the Blinds: you should pass the two digital PINs, where the relays are connedted to, the maximum spinning time (the operation time to fully open the blinds from the closed state)
