@@ -1,23 +1,27 @@
 /*
-  Blinds.h - Library for checking the buttons, connected to Analog pin of Arduino
+  Blinds.h - Library for blinds control by the two relays (first relay turns on/off the power, the second one swithces the direction (up or down))
+			 position is set from 0 to 100 percent
 */
 
 #include "Blinds.h"
 
-Blinds::Blinds(int pow_pin, int up_dn_pin, int op_time) {
+Blinds::Blinds(int pow_pin, int up_dn_pin, int op_time, const char *id, bool inv) {
 	p_pin   = pow_pin;
 	ud_pin  = up_dn_pin;
+	const char *ext = ".txt";
+	const char *pref = "/p";
+	strcpy(path, pref);
+	strcat(path, id);
+	strcat(path, ext);
 	f_time  = op_time;
 	s_time  = f_time/100;
-	pinMode(p_pin,  OUTPUT); 
-    pinMode(ud_pin, OUTPUT);
 	
 	fs_open = SPIFFS.begin();
 	
 	if (fs_open) {
-		File f = SPIFFS.open("/position.txt", "r");
+		File f = SPIFFS.open(path, "r");
 		if (!f) {
-		  File f = SPIFFS.open("/position.txt", "w");
+		  File f = SPIFFS.open(path, "w");
 		  if (f) {
 			  f.println("0"); 
 			  //Serial.println("New file loaded with 0");
@@ -40,14 +44,25 @@ Blinds::Blinds(int pow_pin, int up_dn_pin, int op_time) {
 		pos = 0;
 		cur_pos = pos;
 	}	
-    stop();
+
+	if (inv) {
+		active = false;
+	}	
+	else {
+		active = true;
+	}
+	inactive = !active;
+
+	pinMode(p_pin,  OUTPUT); 
+    pinMode(ud_pin, OUTPUT);
+    stop();	
 }
 
 void Blinds::stop(void) {
-	digitalWrite(p_pin,  LOW);
-	digitalWrite(ud_pin, LOW);
+	digitalWrite(p_pin,  inactive);
+	digitalWrite(ud_pin, inactive);
 	isMove = false;
-    File f = SPIFFS.open("/position.txt", "w");
+    File f = SPIFFS.open(path, "w");
     if (f) {
 		f.println(cur_pos);
 		f.close();
@@ -65,13 +80,13 @@ bool Blinds::isMoving(void) {
 }
 
 void Blinds::move_up(void) {
-	digitalWrite(p_pin,  HIGH);
-	digitalWrite(ud_pin, HIGH);
+	digitalWrite(p_pin,  active);
+	digitalWrite(ud_pin, active);
 }
 
 void Blinds::move_dn(void) {
-	digitalWrite(p_pin,  HIGH);
-	digitalWrite(ud_pin, LOW);	
+	digitalWrite(p_pin,  active);
+	digitalWrite(ud_pin, inactive);	
 }
 
 void Blinds::setPosition(int p) {
