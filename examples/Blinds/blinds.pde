@@ -8,7 +8,7 @@ Moving Blinds connected to D5 and D6 PINS to 20 percent and back to 0 in a loop
 
 #include <Blinds.h>
 
-Blinds win(LDPOW, LDUD, LDTIME, win, true);
+Blinds win(WINPOW, WINUD, WINTIME, win, true);
 
 unsigned long c;
 
